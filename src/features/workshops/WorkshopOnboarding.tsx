@@ -202,7 +202,6 @@ export default function WorkshopOnboarding({
 
     setBusy(true)
     const values = {
-      owner_user_id: session.user.id,
       name: profile.name.trim(),
       city_id: profile.cityId,
       phone_public: profile.phone.trim(),
@@ -229,7 +228,7 @@ export default function WorkshopOnboarding({
     } else {
       const { data, error: insertError } = await supabase
         .from('organizations')
-        .insert(values)
+        .insert({ ...values, owner_user_id: session.user.id })
         .select('id')
         .single()
       if (insertError || !data) {

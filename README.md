@@ -55,9 +55,15 @@ npx supabase db reset
 ```sh
 npm run lint
 npm run typecheck
+npm test
 npm run format:check
 npm run build
 ```
+
+`npm test` запускает тесты один раз; `npm run test:watch` оставляет Vitest в
+режиме наблюдения во время разработки. UI-тесты используют jsdom и Testing
+Library; обращения к Supabase в тестах подменяются, поэтому тесты не требуют
+запущенной базы, `.env.local` или внешних ключей.
 
 GitHub Actions запускает эти команды при push в `main` и для pull request.
 
