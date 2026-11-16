@@ -32,8 +32,17 @@ enabled = true
 site_url = "http://127.0.0.1:5173"
 additional_redirect_urls = ["http://localhost:5173"]
 enable_signup = true
+minimum_password_length = 8
 
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = false
+enable_confirmations = true
+
+[auth.email.template.confirmation]
+subject = "Подтвердите адрес электронной почты — JewelMatch"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Сброс пароля — JewelMatch"
+content_path = "./supabase/templates/recovery.html"

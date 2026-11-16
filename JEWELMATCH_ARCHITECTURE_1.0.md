@@ -14,7 +14,7 @@ flowchart TB
   C[Заказчик: React + Vite SPA] --> SB[Supabase APIs]
   W[Мастерская: React + Vite SPA] --> SB
   A[Администратор: React + Vite SPA] --> SB
-  SB --> AUTH[Supabase Auth: Email OTP / Telegram OIDC]
+  SB --> AUTH[Supabase Auth: Email + password / Telegram OIDC]
   SB --> DB[(PostgreSQL: RLS + RPC)]
   SB --> ST[Supabase Storage: private uploads / public portfolio]
   SB --> RT[Supabase Realtime: scoped chats]
@@ -34,7 +34,7 @@ flowchart TB
 - Один репозиторий, единая модель данных и единые проверки доступа.
 - Поддерживает публикацию, частные сообщения, таймеры и подбор по простым фильтрам без избыточной инфраструктуры.
 - ИИ-поиск и каталоги можно позже добавить как отдельный модуль, не меняя таблицы заказов/диалогов.
-- Supabase Auth предоставляет OTP и custom OAuth/OIDC; Telegram имеет пример подключения через OIDC, где требуется опциональный email.
+- Supabase Auth предоставляет вход по паролю и custom OAuth/OIDC; Telegram использует OIDC и может не предоставлять email.
 - Supabase Queues позволяет выполнять отправку уведомлений вне критического HTTP-запроса.
 
 Для пилота публичные профили мастерских отдаются как часть клиентского приложения; SEO-индексация не является блокирующим требованием. Если её приоритет изменится, отдельно пересмотреть рендеринг публичных страниц.
@@ -102,9 +102,10 @@ React Router можно использовать для клиентской н�
 
 ## 4. Архитектура Auth
 
-### Email
+### Email + пароль
 
-- Supabase Auth OTP по email; подтверждённый email привязывается к пользователю.
+- Регистрация и вход выполняются через Supabase Auth email + password; адрес подтверждается ссылкой из письма.
+- Сброс пароля выполняется ссылкой из письма и формой задания нового пароля.
 - Пользователь после входа, если профиль без роли, видит выбор «Заказчик» / «Мастерская».
 - Выбор роли защищён от самовольной смены через произвольный UPDATE; безопасная смена роли в будущем не предусмотрена пилотом.
 
@@ -253,7 +254,7 @@ sequenceDiagram
 
 **DB/RLS:** cross-user select/insert/update/delete, чтение чужих вложений, admin-only actions, expiry side effects, no double assignments, no double reviews.
 
-**Integration:** auth OTP и Telegram; moderation→publish→matching→trial; сообщения с вложениями; expired→read-only; select/cancel/reopen round; cron timers; payment activation; Telegram webhook retries.
+**Integration:** email/password auth и Telegram; moderation→publish→matching→trial; сообщения с вложениями; expired→read-only; select/cancel/reopen round; cron timers; payment activation; Telegram webhook retries.
 
 **E2E:** mobile-first сценарии трёх ролей (заказчик, мастерская, админ); две конкурирующие мастерские на одном заказе; повторная публикация архивного заказа.
 

@@ -19,6 +19,7 @@
     "supabase:status": "supabase status"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
@@ -30,8 +31,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
-    "supabase": "^2.109.1",
     "prettier": "^3.6.2",
+    "supabase": "^2.109.1",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.49.0",
     "vite": "^8.3.5"

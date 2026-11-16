@@ -1,1 +1,3 @@
--- Reference data will be added with the first domain migration.
+-- Canonical pilot regions, cities, services, and the base plan are inserted by
+-- the versioned core migration so they are also present in hosted environments.
+-- Add only local demo data here; `supabase db reset` runs this file after migrations.
