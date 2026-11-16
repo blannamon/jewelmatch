@@ -1,0 +1,4 @@
+node_modules
+dist
+supabase/.temp
+JEWELMATCH_*.md
